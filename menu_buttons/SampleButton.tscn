@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://upheavtt.tres" type="DynamicFont" id=1]
+
+[node name="button " type="Button"]
+margin_right = 12.0
+margin_bottom = 20.0
+flat = true
+
+[node name="label" type="Label" parent="."]
+margin_right = 40.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 360, 45 )
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color_shadow = Color( 0.262745, 0.568627, 0.105882, 1 )
+custom_constants/shadow_offset_y = 5
+text = "sample"
