@@ -15,6 +15,8 @@ script = ExtResource( 1 )
 [node name="player" type="KinematicBody2D" parent="."]
 script = ExtResource( 2 )
 
+[node name="power_gen" type="Timer" parent="player"]
+
 [node name="p_sprite" type="Sprite" parent="player"]
 texture = ExtResource( 3 )
 
@@ -62,5 +64,6 @@ margin_right = 492.0
 margin_bottom = 148.0
 rect_min_size = Vector2( 180, 50 )
 align = 0
+[connection signal="timeout" from="player/power_gen" to="player" method="_on_power_gen_timeout"]
 [connection signal="pressed" from="player/ui/vbox/back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="player/ui/vbox/quit" to="." method="_on_quit_pressed"]

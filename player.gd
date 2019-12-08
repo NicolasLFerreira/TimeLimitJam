@@ -2,16 +2,30 @@ extends KinematicBody2D
 
 #movement
 
-var speed = 25
-var max_speed = 450
+var speed = 150
+var max_speed = 750
 var jump = -900
 
 #physics
 
+var friction = false
 var g = 30
 var vector = Vector2()
 
+#power
+
+#// p stands for "power"
+
+const pCap = 100
+var pCurrent = 100
+var pGen = 10
+var pPot = 3
+
 func _physics_process(delta):
+	
+	#function call
+	
+	dash()
 	
 	getInput()
 	
@@ -26,19 +40,53 @@ func _physics_process(delta):
 
 func getInput():
 	
-	#running
+	#left and right
 	
-	if Input.is_action_pressed("left"):
+	if (Input.is_action_pressed("left")):
 		vector.x = max(vector.x-speed, -max_speed)
-	elif Input.is_action_pressed("right"):
+	
+	elif (Input.is_action_pressed("right")):
 		vector.x = min(vector.x+speed, max_speed)
+	
+	#idle
+	
 	else:
+		friction = true
+	
+	#both input
+	
+	if (Input.is_action_pressed("right") and Input.is_action_pressed("left")):
 		vector.x = 0
 	
-	if Input.is_action_pressed("right") and Input.is_action_pressed("left"):
-		vector.x = 0
+	#friction
 	
-	#jumping
 	
-	if is_on_floor() and Input.is_action_pressed("jump"):
-		vector.y = jump
+	if !is_on_floor():
+		if friction:
+			vector.x = lerp(vector.x, 0, 0.005)
+
+	
+	if is_on_floor():
+		
+		#jump
+		
+		if (Input.is_action_pressed("jump")):
+			vector.y = jump
+		
+		#friction
+		
+		if friction:
+			vector.x = lerp(vector.x, 0, 0.2)
+
+func dash():
+	
+	var m_pos = get_local_mouse_position()
+	
+	if pCurrent == pCap:
+		pCurrent = 0
+		if Input.is_action_just_pressed("power"):
+			vector = m_pos * pPot
+
+func _on_power_gen_timeout():
+	if pCurrent < pCap:
+		pCurrent = pCurrent + pGen
