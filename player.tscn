@@ -1,11 +1,13 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://player_node.gd" type="Script" id=1]
 [ext_resource path="res://player.gd" type="Script" id=2]
 [ext_resource path="res://icon.png" type="Texture" id=3]
 [ext_resource path="res://ui/remaining_time.tscn" type="PackedScene" id=4]
-[ext_resource path="res://menu_buttons/back_button.tscn" type="PackedScene" id=5]
-[ext_resource path="res://player/playerButtons/playerButtonQuit.tscn" type="PackedScene" id=6]
+[ext_resource path="res://player/current_power.tscn" type="PackedScene" id=5]
+[ext_resource path="res://player/current_power.gd" type="Script" id=6]
+[ext_resource path="res://menu_buttons/back_button.tscn" type="PackedScene" id=7]
+[ext_resource path="res://player/playerButtons/playerButtonQuit.tscn" type="PackedScene" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -16,6 +18,7 @@ script = ExtResource( 1 )
 script = ExtResource( 2 )
 
 [node name="power_gen" type="Timer" parent="player"]
+autostart = true
 
 [node name="p_sprite" type="Sprite" parent="player"]
 texture = ExtResource( 3 )
@@ -37,9 +40,10 @@ grow_horizontal = 0
 grow_vertical = 0
 
 [node name="vbox" type="VBoxContainer" parent="player/ui"]
-margin_left = 275.0
-margin_right = 767.0
-margin_bottom = 153.0
+margin_left = 274.817
+margin_top = 0.193604
+margin_right = 766.817
+margin_bottom = 197.194
 grow_horizontal = 0
 grow_vertical = 0
 
@@ -52,16 +56,25 @@ grow_horizontal = 0
 grow_vertical = 0
 rect_min_size = Vector2( 180, 45 )
 
-[node name="back" parent="player/ui/vbox" instance=ExtResource( 5 )]
+[node name="current_power" parent="player/ui/vbox" instance=ExtResource( 5 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_top = 49.0
 margin_right = 492.0
 margin_bottom = 94.0
 rect_min_size = Vector2( 360, 45 )
+script = ExtResource( 6 )
 
-[node name="quit" parent="player/ui/vbox" instance=ExtResource( 6 )]
+[node name="back" parent="player/ui/vbox" instance=ExtResource( 7 )]
 margin_top = 98.0
 margin_right = 492.0
-margin_bottom = 148.0
+margin_bottom = 143.0
+rect_min_size = Vector2( 360, 45 )
+
+[node name="quit" parent="player/ui/vbox" instance=ExtResource( 8 )]
+margin_top = 147.0
+margin_right = 492.0
+margin_bottom = 197.0
 rect_min_size = Vector2( 180, 50 )
 align = 0
 [connection signal="timeout" from="player/power_gen" to="player" method="_on_power_gen_timeout"]

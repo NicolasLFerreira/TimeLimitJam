@@ -16,8 +16,7 @@ var vector = Vector2()
 
 #// p stands for "power"
 
-const pCap = 100
-var pCurrent = 100
+const opGen = 10
 var pGen = 10
 var pPot = 3
 
@@ -82,11 +81,20 @@ func dash():
 	
 	var m_pos = get_local_mouse_position()
 	
-	if pCurrent == pCap:
-		pCurrent = 0
+	if p.pCurrent == p.pCap:
+		
+		#boost
+		
 		if Input.is_action_just_pressed("power"):
 			vector = m_pos * pPot
+			
+		
+		#pGen fix
+		
+		pGen -= opGen
+	else:
+		pGen = opGen
 
 func _on_power_gen_timeout():
-	if pCurrent < pCap:
-		pCurrent = pCurrent + pGen
+	if p.pCurrent < p.pCap:
+		p.pCurrent = p.pCurrent + pGen

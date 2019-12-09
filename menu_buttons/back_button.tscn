@@ -5,4 +5,4 @@
 [node name="button " index="0" instance=ExtResource( 1 )]
 
 [node name="label" parent="." index="0"]
-text = "back"
+text = "                     back"
